@@ -1,0 +1,35 @@
+{
+  "name": "Desafio Calidades",
+  "version": "0.0.1",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "description": "",
+  "dependencies": {
+    "@cloudinary/url-gen": "^1.21.0",
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
+    "fast-csv": "^5.0.2",
+    "http-status-codes": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9",
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.3.1",
+    "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2",
+    "socket.io": "^4.8.1",
+    "uuid": "^11.0.5"
+  }
+}
