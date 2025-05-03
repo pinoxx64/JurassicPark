@@ -36,19 +36,17 @@ User.init({
 }, {
   hooks: {
     afterCreate: async (user, options) => {
-      //Asociacion automatica a la hora de crear el usuario con el rol por defecto
       const rol = await Rol.findOne({ where: { name: 'Usuario' } })
       if (rol) {
-        await UserRols.create({ user_id: user.id, rol_id: rol.id })
+        await UserRols.create({ userId: user.id, rolId: rol.id })
       }
       return Promise.resolve()
     },
     afterBulkCreate: async (users, options) => {
-      //Asociacion automatica a la hora de crear un conjunto de usuarios con el rol por defecto
       const rol = await Rol.findOne({ where: { name: 'Usuario' }} )
       if (rol) {
         for (const user of users) {
-          await UserRols.create({ user_id: user.id, rol_id: rol.id })
+          await UserRols.create({ userId: user.id, rolId: rol.id })
         }
       }
       return Promise.resolve()
