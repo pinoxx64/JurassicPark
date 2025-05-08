@@ -95,6 +95,7 @@ class UserConnection {
 
     login = async(email, password) => {
         let user = []
+        console.log(email, password)
 
         user = await User.findOne({
             where: { 
@@ -124,7 +125,7 @@ class UserConnection {
             deletedAt: user.deletedAt,
             roles: user.roles.map(rol => rol.rol.name)
         }
-
+        console.log(user)
         return user
     }
 
