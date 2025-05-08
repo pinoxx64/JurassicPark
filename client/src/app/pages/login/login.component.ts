@@ -25,7 +25,7 @@ export class LoginComponent {
     this.UserService.login({ email: this.email, password: this.password }).subscribe({
       next: (response: User) => {
         console.log(response);
-        localStorage.setItem('user', JSON.stringify(response));
+        sessionStorage.setItem('user', JSON.stringify(response));
         this.router.navigate(['/inicio']);
       },
       error: (error) => {

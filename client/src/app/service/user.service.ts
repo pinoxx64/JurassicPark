@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../interface/user';
 import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,4 +16,10 @@ export class UserService {
     console.log(body)
     return this.http.post<User>(`${environment.userUrl}/login`, body)
   }
+
+getUsers(): Observable<User[]> {
+  return this.http.get<{ users: User[] }>(`${environment.userUrl}/`).pipe(
+    map(response => response.users)
+  );
+}
 }
