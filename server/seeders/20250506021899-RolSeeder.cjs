@@ -1,14 +1,14 @@
 'use strict';
-import {roles} from '../factories/RolFactory.cjs'
+const { roles } = require('../factories/RolFactory.cjs')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     const rolesDefault = await roles()
-    await queryInterface.bulkInsert('roles', rolesDefault, {})
+    await queryInterface.bulkInsert('rols', rolesDefault, {})
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('roles', null, {})
+    await queryInterface.bulkDelete('rols', null, {})
   }
 };

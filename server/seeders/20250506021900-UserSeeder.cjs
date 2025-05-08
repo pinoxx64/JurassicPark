@@ -1,5 +1,5 @@
 'use strict';
-import { usuarios } from '../factories/UserFactory.cjs';
+const { usuarios } = require('../factories/UserFactory.cjs')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
         const roles = await rol.findAll({where: { name: usuario.roles }})
 
         for (const rol of roles) {
-          await userRol.create({ userId: usuarioCreado.id, rolId: rol.id })
+          await userRol.create({ userId: usuarioCreado.dataValues.id, rolId: rol.dataValues.id })
         }
       }
     }

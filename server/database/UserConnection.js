@@ -1,8 +1,7 @@
-import {User} from '../models/user.js'
+import { User, UserRol, Rol } from '../models/associations.js'
 import bycrypt from 'bcrypt'
 import { Op, where } from 'sequelize'
-import UserRol from '../models/userrol'
-import Rol from '../models/rol.js'
+
 
 class UserConnection {
     getUsers = async() => {
@@ -22,20 +21,22 @@ class UserConnection {
 
         if (!users) throw new Error("No hay usuarios")
 
-        users = users.map(user => {
-            return {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                image: user.image,
-                deletedAt: user.deletedAt,
-                roles: user.roles.map(rol => rol.rol.name)
-            }
-        })
+        users = users.map(user => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            deletedAt: user.deletedAt,
+            roles: user.roles.map(rol => rol.rol.name)
+        }))
+
+        return users
     }
 
     getUserById = async(id) => {
-        const user = await User.findOne({
+
+        let user = []
+        user = await User.findOne({
             where: { id },
             include: [{
                 model : UserRol,
@@ -49,7 +50,7 @@ class UserConnection {
 
         if (!user) throw new Error("No existe el usuario")
 
-        return {
+        user ={
             id: user.id,
             name: user.name,
             email: user.email,
@@ -57,10 +58,14 @@ class UserConnection {
             deletedAt: user.deletedAt,
             roles: user.roles.map(rol => rol.rol.name)
         }
+
+        return user
     }
 
     getUserByEmail = async(email) => {
-        const user = await User.findOne({
+        let user = []
+
+        user = await User.findOne({
             where: { 
                 email: email
             },
@@ -76,7 +81,7 @@ class UserConnection {
 
         if (!user) throw new Error("No existe el usuario")
 
-        return {
+        user = {
             id: user.id,
             name: user.name,
             email: user.email,
@@ -84,6 +89,8 @@ class UserConnection {
             deletedAt: user.deletedAt,
             roles: user.roles.map(rol => rol.rol.name)
         }
+
+        return user
     }
 
     login = async(email, password) => {
@@ -105,11 +112,11 @@ class UserConnection {
 
         if (!user) throw new Error("No existe el usuario")
 
-        const correctPassword = await bcrypt.compare(password, user.password)
+        const correctPassword = await bycrypt.compare(password, user.password)
 
         if (!correctPassword) throw new Error("Contraseña incorrecta")
 
-        return {
+        user = {
             id: user.id,
             name: user.name,
             email: user.email,
@@ -117,6 +124,8 @@ class UserConnection {
             deletedAt: user.deletedAt,
             roles: user.roles.map(rol => rol.rol.name)
         }
+
+        return user
     }
 
     postUser = async(body) => {

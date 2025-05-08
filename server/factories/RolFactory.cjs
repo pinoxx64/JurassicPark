@@ -13,6 +13,10 @@ const roles = async() => {
         name: 'Mantenimiento'
     })
 
+    rol.push({
+        name: 'Usuario'
+    })
+
     return rol
 }
 
