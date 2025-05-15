@@ -5,6 +5,8 @@ import RazaSaurio from "./razasaurio.js";
 import nivelPeligrosidad from "./nivelpeligrosidad.js";
 import alimentacion from "./alimentacion.js";
 import Dinosaurio from "./dinosaurio.js";
+import Celda from "./celda.js"
+import CeldaDinosaurio from "./celdadinosaurio.js"
 
 // Users
 User.Rol = User.hasMany(UserRol, {as: 'roles', foreignKey: 'userId'})
@@ -21,6 +23,7 @@ RazaSaurio.Dinosaurio = RazaSaurio.hasMany(Dinosaurio, {as: 'dinosaurios', forei
 
 // nivelPeligrosidad
 nivelPeligrosidad.Dinosaurio = nivelPeligrosidad.hasMany(Dinosaurio, {as: 'dinosaurios', foreignKey: 'nivelPeligrosidadId'})
+nivelPeligrosidad.Celda = nivelPeligrosidad.hasMany(Celda, {as: 'celdas', foreignKey: 'nivelPeligrosidadId'})
 
 // alimentacion
 alimentacion.Dinosaurio = alimentacion.hasMany(Dinosaurio, {as: 'dinosaurios', foreignKey: 'alimentacionId'})
@@ -29,6 +32,17 @@ alimentacion.Dinosaurio = alimentacion.hasMany(Dinosaurio, {as: 'dinosaurios', f
 Dinosaurio.RazaSaurio = Dinosaurio.belongsTo(RazaSaurio, {as: 'razaSaurio', foreignKey: 'razaSaurioId'})
 Dinosaurio.nivelPeligrosidad = Dinosaurio.belongsTo(nivelPeligrosidad, {as: 'nivelPeligrosidad', foreignKey: 'nivelPeligrosidadId'})
 Dinosaurio.alimentacion = Dinosaurio.belongsTo(alimentacion, {as: 'alimentacion', foreignKey: 'alimentacionId'})
+
+Dinosaurio.CeldaDinosaurio = Dinosaurio.hasMany(Dinosaurio, {as: 'celdaDinosaurios', foreignKey: 'dinosaurioId'})
+
+// Celda
+Celda.CeldaDinosaurio = Celda.hasMany(CeldaDinosaurio, {as: 'celdaDinosaurios', foreignKey: 'celdaId'})
+
+Celda.nivelPeligrosidad = Celda.belongsTo(nivelPeligrosidad, {as: 'nivelPeligrosidads', foreignKey: 'nivelPeligrosidadId'})
+
+// CeldaDinosaurio
+CeldaDinosaurio.Celda = CeldaDinosaurio.belongsTo(Celda, {as: 'celdas', foreignKey: 'celdaId'})
+CeldaDinosaurio.Dinosaurio = CeldaDinosaurio.belongsTo(Dinosaurio, {as: 'dinosaurios', foreignKey: 'dinosaurioId'})
 
 export {
     User,

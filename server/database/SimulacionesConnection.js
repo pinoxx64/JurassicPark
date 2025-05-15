@@ -1,0 +1,7 @@
+
+
+class SimulacionesConnection {
+    simularFuncionNormal = async() => {
+        
+    }
+}
