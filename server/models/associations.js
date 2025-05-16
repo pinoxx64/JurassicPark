@@ -51,5 +51,7 @@ export {
     RazaSaurio,
     nivelPeligrosidad,
     alimentacion,
-    Dinosaurio
+    Dinosaurio,
+    Celda,
+    CeldaDinosaurio
 }
