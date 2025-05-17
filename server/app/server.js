@@ -3,6 +3,7 @@ import cors from 'cors'
 import { createServer } from 'http'
 
 import { router as UserRoutes } from '../routes/UserRoutes.js'
+import { router as SimulacionesRoutes } from '../routes/SimulacionesRoutes.js'
 
 class Server {
 
@@ -11,6 +12,7 @@ class Server {
         this.serverExpress = createServer(this.app)
     
         this.usersPath = '/api/user'
+        this.simulacionPath = '/api/simulacion'
 
         this.middlewares()
         this.routes()
@@ -23,6 +25,7 @@ class Server {
 
     routes(){
         this.app.use(this.usersPath, UserRoutes)
+        this.app.use(this.simulacionPath, SimulacionesRoutes)
     }
 
     listen() {

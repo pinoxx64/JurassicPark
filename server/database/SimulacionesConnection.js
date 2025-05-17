@@ -52,4 +52,4 @@ class SimulacionesConnection {
     }
 }
 
-module.exports = SimulacionesConnection
+export { SimulacionesConnection }
