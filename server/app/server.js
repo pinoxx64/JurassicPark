@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import { createServer } from 'http'
 
-import { router as UserRoutes } from '../routes/userRoutes.js'
+import { router as UserRoutes } from '../routes/UserRoutes.js'
 
 class Server {
 
