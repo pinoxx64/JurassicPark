@@ -1,4 +1,4 @@
-import { SimulacionesConnection } from "../database/SimulacionesConnection"
+import { SimulacionesConnection } from "../database/SimulacionesConnection.js"
 
 const conn = new SimulacionesConnection
 

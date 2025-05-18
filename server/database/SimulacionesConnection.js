@@ -15,29 +15,25 @@ class SimulacionesConnection {
             let informeIteracion = [];
 
             for (const celda of celdas) {
-                // Bajar la cantidad de alimento (10-30%)
-                const porcentaje = Math.random() * 0.2 + 0.1;
+                // Bajar la cantidad de alimento (15-5%)
+                const porcentaje = Math.random() * 0.1 + 0.05;
                 const alimentoInicial = celda.CantAlimento;
                 const nuevoAlimento = Math.max(0, Math.floor(alimentoInicial * (1 - porcentaje)));
 
                 // Generar avería aleatoria (20% probabilidad)
-                const averiasInicial = celda.Averias;
-                let averiasFinal = averiasInicial;
                 if (Math.random() < 0.2) {
-                    averiasFinal += 1;
+                    celda.Averias += 1;
                 }
 
                 // Guardar cambios
                 celda.CantAlimento = nuevoAlimento;
-                celda.Averias = averiasFinal;
                 await celda.save();
 
                 informeIteracion.push({
                     celdaId: celda.id,
                     alimentoInicial,
                     alimentoFinal: nuevoAlimento,
-                    averiasInicial,
-                    averiasFinal,
+                    averias: celda.Averias,
                     dinosaurios: celda.celdaDinosaurios.map(cd => cd.dinosaurioId)
                 });
             }

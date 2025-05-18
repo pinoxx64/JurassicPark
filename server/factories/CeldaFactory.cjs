@@ -4,7 +4,7 @@ const celda = async() => {
     for (let i = 1; i <= 6; i++) {
         cel.push({
             nivelPeligrosidadId: i,
-            CantAlimento: 0,
+            CantAlimento: 100,
             Averias: 0,
             NivelSeguridad: i
         })
