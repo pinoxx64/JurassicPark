@@ -1,0 +1,46 @@
+<app-cabecera></app-cabecera>
+
+<div class="simulacion-container">
+  <div class="p-inputgroup" style="margin-bottom: 1rem;">
+    <span class="p-inputgroup-addon">Tiempo (iteraciones)</span>
+    <input type="number" pInputText [(ngModel)]="tiempo" min="1" style="width: 100px;">
+    <button pButton type="button" label="Iniciar Simulación" icon="pi pi-play" (click)="iniciarSimulacion()" [disabled]="loading || tiempo < 1"></button>
+  </div>
+
+  <div *ngIf="loading" class="p-mb-3">
+    <p>Simulando...</p>
+  </div>
+
+  <div *ngIf="mostrando && simulacion">
+    <ng-container *ngFor="let iter of iteracionesMostradas">
+      <h3>Iteración {{ iter.iteracion }} de {{ iteraciones.length }}</h3>
+      <p-table [value]="iter.informe" [responsiveLayout]="'scroll'" [paginator]="false">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Celda</th>
+            <th>Alimento Inicial</th>
+            <th>Alimento Final</th>
+            <th>Averías</th>
+            <th>Dinosaurios</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td>{{ row.celdaId }}</td>
+            <td>{{ row.alimentoInicial }}</td>
+            <td>{{ row.alimentoFinal }}</td>
+            <td>{{ row.averias }}</td>
+            <td>
+              <span *ngFor="let dino of row.dinosaurios; let last = last">
+                {{ dino }}<span *ngIf="!last">, </span>
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-container>
+    <div *ngIf="iteracionesMostradas.length === iteraciones.length" class="p-mt-3">
+      <p><b>Simulación finalizada.</b></p>
+    </div>
+  </div>
+</div>

@@ -3,4 +3,4 @@ import SimulacionesController from '../controllers/SimulacionesController.js';
 
 export const router = Router()
 
-router.get('/', SimulacionesController.funSimularFuncionNormal)
+router.post('/', SimulacionesController.funSimularFuncionNormal)
