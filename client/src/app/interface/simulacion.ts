@@ -17,3 +17,21 @@ export interface Simulacion {
     message: string;
     informes: IteracionSimulacion[];
 }
+
+export interface SimulacionBrecha {
+    celda: number;
+    nivelPeligrosidad: number;
+    cantidadAlimento: number;
+    averias: number;
+    nivelSeguridad: number;
+    dinosaurios: string[];
+    efectos: string;
+    probabilidadFuga: number;
+    fuga: boolean
+}
+
+export interface SimulacionBrechaResponse {
+    status: number;
+    message: string;
+    informes: SimulacionBrecha[];
+}

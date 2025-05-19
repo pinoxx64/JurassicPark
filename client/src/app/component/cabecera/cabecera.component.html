@@ -4,6 +4,7 @@
     <button pButton type="button" label="Inicio" icon="pi pi-home" (click)="inicio()" class="p-button-text"></button>
     <button *ngIf="isAdmin" pButton type="button" label="Administrar Usuarios" icon="pi pi-users" (click)="gestionUser()" class="p-button-text"></button>
     <button *ngIf="isAdmin" pButton type="button" label="Simulacion" icon="pi pi-play" (click)="simulacion()" class="p-button-text"></button>
+    <button *ngIf="isAdmin" pButton type="button" label="Celdas" icon="pi pi-bullseye" (click)="celdas()" class="p-button-text"></button>
     <button pButton type="button" label="Cerrar Sesión" icon="pi pi-sign-out" (click)="logout()" class="p-button-text"></button>
   </nav>
 </div>

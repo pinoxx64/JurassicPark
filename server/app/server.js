@@ -4,6 +4,7 @@ import { createServer } from 'http'
 
 import { router as UserRoutes } from '../routes/UserRoutes.js'
 import { router as SimulacionesRoutes } from '../routes/SimulacionesRoutes.js'
+import { router as CeldaRoutes } from '../routes/CeldaRoutes.js'
 
 class Server {
 
@@ -13,6 +14,7 @@ class Server {
     
         this.usersPath = '/api/user'
         this.simulacionPath = '/api/simulacion'
+        this.celdaPath = '/api/celda'
 
         this.middlewares()
         this.routes()
@@ -26,6 +28,7 @@ class Server {
     routes(){
         this.app.use(this.usersPath, UserRoutes)
         this.app.use(this.simulacionPath, SimulacionesRoutes)
+        this.app.use(this.celdaPath, CeldaRoutes)
     }
 
     listen() {

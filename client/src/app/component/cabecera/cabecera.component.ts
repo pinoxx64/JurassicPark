@@ -39,6 +39,10 @@ export class CabeceraComponent implements OnInit {
     this.router.navigate(['/simulacion']);
   }
 
+  celdas() {
+    this.router.navigate(['/celdas']);
+  }
+
   logout() {
     sessionStorage.clear();
     this.router.navigate(['/login']);

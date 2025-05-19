@@ -3,12 +3,14 @@ import { LoginComponent } from './pages/login/login.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { GestionUserComponent } from './pages/gestion-user/gestion-user.component';
 import { SimulacionComponent } from './pages/simulacion/simulacion.component';
+import { CeldaComponent } from './pages/celda/celda.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'inicio', component: InicioComponent },
     { path: 'gestionUser', component: GestionUserComponent},
     { path: 'simulacion', component: SimulacionComponent},
+    { path: 'celdas', component: CeldaComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];
