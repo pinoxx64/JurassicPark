@@ -5,12 +5,13 @@ import { CabeceraComponent } from "../../component/cabecera/cabecera.component";
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-simulacion',
   templateUrl: './simulacion.component.html',
   styleUrls: ['./simulacion.component.css'],
-  imports: [CabeceraComponent, CommonModule, TableModule, FormsModule],
+  imports: [CabeceraComponent, CommonModule, TableModule, FormsModule, ButtonModule],
 })
 export class SimulacionComponent {
   tiempo: number = 1;
