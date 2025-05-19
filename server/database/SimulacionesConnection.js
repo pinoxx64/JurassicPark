@@ -1,40 +1,46 @@
-import { Celda, CeldaDinosaurio} from "../models/associations.js"
+import { Celda, CeldaDinosaurio, Dinosaurio} from "../models/associations.js"
 
 class SimulacionesConnection {
     simularFuncionNormal = async(tiempo) => {
 
-
         let informes = [];
 
         for (let i = 0; i < tiempo; i++) {
-            // Obtener todas las celdas con sus dinosaurios
             const celdas = await Celda.findAll({
-                include: [{ model: CeldaDinosaurio, as: 'celdaDinosaurios' }]
+                paranoid: false,
+                include: [{
+                    model: CeldaDinosaurio,
+                    as: 'celdaDinosaurios',
+                    include: [{
+                        model: Dinosaurio,
+                        as: 'dinosaurio'
+                    }]
+                }]
             });
 
             let informeIteracion = [];
 
             for (const celda of celdas) {
-                // Bajar la cantidad de alimento (15-5%)
                 const porcentaje = Math.random() * 0.1 + 0.05;
                 const alimentoInicial = celda.CantAlimento;
                 const nuevoAlimento = Math.max(0, Math.floor(alimentoInicial * (1 - porcentaje)));
 
-                // Generar avería aleatoria (20% probabilidad)
                 if (Math.random() < 0.2) {
                     celda.Averias += 1;
                 }
 
-                // Guardar cambios
                 celda.CantAlimento = nuevoAlimento;
                 await celda.save();
 
+                const nombresDinosaurios = celda.celdaDinosaurios.map(cd => cd.dinosaurio?.name);
+
                 informeIteracion.push({
-                    celdaId: celda.id,
-                    alimentoInicial,
-                    alimentoFinal: nuevoAlimento,
+                    celda: celda.id,
+                    nivelPeligrosidad: celda.nivelPeligrosidadId,
+                    cantidadAlimento: celda.CantAlimento,
                     averias: celda.Averias,
-                    dinosaurios: celda.celdaDinosaurios.map(cd => cd.dinosaurioId)
+                    nivelSeguridad: celda.NivelSeguridad,
+                    dinosaurios: nombresDinosaurios
                 });
             }
 

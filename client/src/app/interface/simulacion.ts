@@ -1,9 +1,10 @@
 export interface InformeCelda {
-    celdaId: number;
-    alimentoInicial: number;
-    alimentoFinal: number;
+    celda: number;
+    nivelPeligrosidad: number;
+    cantidadAlimento: number;
     averias: number;
-    dinosaurios: number[];
+    nivelSeguridad: number;
+    dinosaurios: string[];
 }
 
 export interface IteracionSimulacion {

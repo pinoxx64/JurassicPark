@@ -19,7 +19,7 @@ UserRol.User = UserRol.belongsTo(User, {as: 'user', foreignKey: 'userId'})
 UserRol.Rol = UserRol.belongsTo(Rol, {as: 'rol', foreignKey: 'rolId'})
 
 // RazaSaurio
-RazaSaurio.Dinosaurio = RazaSaurio.hasMany(Dinosaurio, {as: 'dinosaurios', foreignKey: 'razaSaurioId'})
+RazaSaurio.Dinosaurio = RazaSaurio.hasMany(Dinosaurio, {as: 'dinosaurios', foreignKey: 'razaId'})
 
 // nivelPeligrosidad
 nivelPeligrosidad.Dinosaurio = nivelPeligrosidad.hasMany(Dinosaurio, {as: 'dinosaurios', foreignKey: 'nivelPeligrosidadId'})
@@ -29,12 +29,11 @@ nivelPeligrosidad.Celda = nivelPeligrosidad.hasMany(Celda, {as: 'celdas', foreig
 alimentacion.Dinosaurio = alimentacion.hasMany(Dinosaurio, {as: 'dinosaurios', foreignKey: 'alimentacionId'})
 
 // Dinosaurio
-Dinosaurio.RazaSaurio = Dinosaurio.belongsTo(RazaSaurio, {as: 'razaSaurio', foreignKey: 'razaSaurioId'})
+Dinosaurio.RazaSaurio = Dinosaurio.belongsTo(RazaSaurio, {as: 'razaSaurio', foreignKey: 'razaId'})
 Dinosaurio.nivelPeligrosidad = Dinosaurio.belongsTo(nivelPeligrosidad, {as: 'nivelPeligrosidad', foreignKey: 'nivelPeligrosidadId'})
 Dinosaurio.alimentacion = Dinosaurio.belongsTo(alimentacion, {as: 'alimentacion', foreignKey: 'alimentacionId'})
 
-Dinosaurio.CeldaDinosaurio = Dinosaurio.hasMany(Dinosaurio, {as: 'celdaDinosaurios', foreignKey: 'dinosaurioId'})
-
+Dinosaurio.CeldaDinosaurio = Dinosaurio.hasMany(CeldaDinosaurio, {as: 'celdaDinosaurios', foreignKey: 'dinosaurioId'})
 // Celda
 Celda.CeldaDinosaurio = Celda.hasMany(CeldaDinosaurio, {as: 'celdaDinosaurios', foreignKey: 'celdaId'})
 
@@ -42,7 +41,7 @@ Celda.nivelPeligrosidad = Celda.belongsTo(nivelPeligrosidad, {as: 'nivelPeligros
 
 // CeldaDinosaurio
 CeldaDinosaurio.Celda = CeldaDinosaurio.belongsTo(Celda, {as: 'celdas', foreignKey: 'celdaId'})
-CeldaDinosaurio.Dinosaurio = CeldaDinosaurio.belongsTo(Dinosaurio, {as: 'dinosaurios', foreignKey: 'dinosaurioId'})
+CeldaDinosaurio.Dinosaurio = CeldaDinosaurio.belongsTo(Dinosaurio, {as: 'dinosaurio', foreignKey: 'dinosaurioId'})
 
 export {
     User,
