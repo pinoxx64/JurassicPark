@@ -18,6 +18,22 @@ const CeldaController = {
                     message: err.message
                 })
             })
+    },
+    funPutCelda: (req, res) => {
+        conn.putCelda(req.params.id, req.body)
+            .then(celda => {
+                res.status(200).json({
+                    status: 200,
+                    message: "Celda actualizada",
+                    celda: celda
+                })
+            })
+            .catch(err => {
+                res.status(500).json({
+                    status: 500,
+                    message: err.message
+                })
+            })
     }
 }
 

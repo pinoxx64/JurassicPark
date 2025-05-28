@@ -1,45 +1,30 @@
 <app-cabecera></app-cabecera>
 <p-toast></p-toast>
-<div class="celda-container">
-  <p-table [value]="celdas" [loading]="loading" [responsiveLayout]="'scroll'">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Celda</th>
-        <th>Nivel Peligrosidad</th>
-        <th>Cantidad de Alimento</th>
-        <th>Averías</th>
-        <th>Nivel Seguridad</th>
-        <th>Acciones</th>
-      </tr>
+<div class="celda-card-container" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+  <p-card *ngFor="let celda of celdas" [header]="'Celda ' + celda.id" [ngStyle]="{width: '320px'}">
+    <ng-template pTemplate="footer">
+      <button pButton type="button" icon="pi pi-exclamation-triangle" label="Simular Brecha"
+        (click)="confirmarBrecha($event, celda.id)" [disabled]="loading" severity="danger" style="margin-right: 0.5rem;"></button>
+      <button pButton type="button" icon="pi pi-search" label="Ver Detalles"
+        (click)="verDetalles(celda)"></button>
+      <button *ngIf="isVeterinario" pButton type="button" severity="info" class="" icon="pi pi-search" label="Rellenar comederos"
+        (click)="rellenarComedero(celda)"></button>
+      <button *ngIf="isMantenimiento" pButton type="button" severity="warn" icon="pi pi-search" label="Arreglar averías"
+        (click)="repararAveria(celda)"></button>
     </ng-template>
-    <ng-template pTemplate="body" let-celda>
-      <tr>
-        <td>{{ celda.id }}</td>
-        <td>{{ celda.nivelPeligrosidad }}</td>
-        <td>{{ celda.cantidadAlimento }}</td>
-        <td>{{ celda.averias }}</td>
-        <td>{{ celda.nivelSeguridad }}</td>
-        <td>
-          <button pButton type="button" icon="pi pi-exclamation-triangle" label="Simular Brecha"
-            (click)="ejecutarBrecha(celda.id)" [disabled]="loading"></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-<div *ngIf="resultadoBrecha" class="p-mt-4">
-  <h3>Resultado de la Brecha en Celda {{ resultadoBrecha.celda }}</h3>
-  <ul>
-    <li><b>Nivel Peligrosidad:</b> {{ resultadoBrecha.nivelPeligrosidad }}</li>
-    <li><b>Cantidad de Alimento:</b> {{ resultadoBrecha.cantidadAlimento }}</li>
-    <li><b>Averías:</b> {{ resultadoBrecha.averias }}</li>
-    <li><b>Nivel Seguridad:</b> {{ resultadoBrecha.nivelSeguridad }}</li>
-    <li><b>Dinosaurios:</b> {{ resultadoBrecha.dinosaurios.join(', ') }}</li>
-    <li><b>Probabilidad de Fuga:</b> {{ resultadoBrecha.probabilidadFuga }}</li>
-    <li><b>Efectos:</b>
-      <ul>
-        <li *ngFor="let efecto of resultadoBrecha.efectos">{{ efecto }}</li>
-      </ul>
-    </li>
-  </ul>
+  </p-card>
 </div>
-</div>
+
+<p-confirmPopup></p-confirmPopup>
+
+<app-celda-detalle
+  [celda]="celdaSeleccionada"
+  [visible]="mostrarDialogo"
+  [onClose]="cerrarDialogo">
+</app-celda-detalle>
+
+<app-brecha-resultado
+  [resultado]="resultadoBrecha"
+  [visible]="mostrarDialogoBrecha"
+  [onClose]="cerrarDialogoBrecha">
+</app-brecha-resultado>

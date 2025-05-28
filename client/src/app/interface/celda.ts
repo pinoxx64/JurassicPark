@@ -11,3 +11,9 @@ export interface CeldaResponse {
     message: string;
     celdas: Celda[];
 }
+
+export interface CeldaResponse {
+    status: number;
+    message: string;
+    celda: Celda;
+}

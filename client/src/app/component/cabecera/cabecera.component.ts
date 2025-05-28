@@ -14,6 +14,8 @@ import { ButtonModule } from 'primeng/button';
 })
 export class CabeceraComponent implements OnInit {
   isAdmin: boolean = false;
+  isVeterinario: boolean = false
+  isMantenimiento: boolean = false
 
   constructor(private router: Router) {}
 
@@ -21,9 +23,9 @@ export class CabeceraComponent implements OnInit {
     const user = sessionStorage.getItem('user');
     if (user) {
       const usuario = JSON.parse(user);
-      console.log(usuario);
       this.isAdmin = usuario.user.roles.includes('Administrador');
-      console.log(this.isAdmin);
+      this.isVeterinario = usuario.user.roles.includes('Veterinario')
+      this.isMantenimiento = usuario.user.roles.includes('Mantenimiento');
     }
   }
 

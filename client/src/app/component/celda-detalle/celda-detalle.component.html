@@ -1,0 +1,10 @@
+<p-dialog header="Detalles de la Celda" [(visible)]="visible" [modal]="true" [style]="{width: '400px'}" (onHide)="onClose()">
+  <div *ngIf="celda">
+    <ul>
+      <li><b>Nivel Peligrosidad:</b> {{ celda.nivelPeligrosidad }}</li>
+      <li><b>Cantidad de Alimento:</b> {{ celda.cantidadAlimento }}</li>
+      <li><b>Averías:</b> {{ celda.averias }}</li>
+      <li><b>Nivel Seguridad:</b> {{ celda.nivelSeguridad }}</li>
+    </ul>
+  </div>
+</p-dialog>

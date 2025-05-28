@@ -1,4 +1,21 @@
-.simulacion-container {
-  max-width: 800px;
-  margin: 2rem auto;
+.badge-peligro-bajo {
+  background: #c8e6c9;
+  color: #256029;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+.badge-peligro-medio {
+  background: #fff9c4;
+  color: #8d6e63;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+.badge-peligro-alto {
+  background: #ffcdd2;
+  color: #b71c1c;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 500;
 }
