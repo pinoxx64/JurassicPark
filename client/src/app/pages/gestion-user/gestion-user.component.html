@@ -13,10 +13,10 @@
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
       <td>
-        <button pButton type="button" label="Editar" icon="pi pi-pencil"
-          class="p-button-text"></button>
-        <button *ngIf="user.deletedAt == null" pButton type="button" label="Eliminar" icon="pi pi-trash" class="p-button-text"
-          (click)="deleteUser($event, user.id)"></button>
+        <button pButton type="button" label="Editar" severity="info" icon="pi pi-pencil" class="p-button-text"
+          (click)="openEditDialog(user)"></button>
+        <button *ngIf="user.deletedAt == null" pButton type="button" label="Eliminar" severity="danger"
+          icon="pi pi-trash" class="p-button-text" (click)="deleteUser($event, user.id)"></button>
         <button *ngIf="user.deletedAt != null" pButton type="button" label="Añadir" icon="pi pi-user-plus"
           class="p-button-success p-button-text" (click)="activateUser($event, user.id)"></button>
       </td>
@@ -25,3 +25,10 @@
 </p-table>
 
 <p-confirmPopup></p-confirmPopup>
+
+<app-user-edit
+  [visible]="editDialogVisible"
+  [user]="userToEdit"
+  [onClose]="closeEditDialog"
+  [onSave]="saveUserEdit">
+</app-user-edit>
