@@ -66,6 +66,7 @@ export class CeldaComponent implements OnInit {
     this.loading = true;
     this.celdaService.getCeldas().subscribe({
       next: (data) => {
+        console.log(data)
         this.celdas = data.celdas;
         this.loading = false;
       },
@@ -189,6 +190,7 @@ repararAveria(celda: Celda) {
   };
 
   verDetalles(celda: Celda) {
+    console.log(celda)
     this.celdaSeleccionada = celda;
     this.mostrarDialogo = true;
   }

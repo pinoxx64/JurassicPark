@@ -6,6 +6,15 @@ export interface Celda {
     nivelSeguridad: number;
 }
 
+export interface CeldaM{
+    id: number;
+    nivelPeligrosidad: number;
+    cantidadAlimento: number;
+    averias: number;
+    nivelSeguridad: number;
+    dinosaurios: string[]
+}
+
 export interface CeldaResponse {
     status: number;
     message: string;
