@@ -4,13 +4,13 @@ import { Op, where } from 'sequelize'
 
 
 class UserConnection {
-    getUsers = async() => {
+    getUsers = async () => {
         let users = []
 
         users = await User.findAll({
             paranoid: false,
             include: [{
-                model : UserRol,
+                model: UserRol,
                 as: 'roles',
                 include: {
                     model: Rol,
@@ -33,44 +33,13 @@ class UserConnection {
         return users
     }
 
-    getUserById = async(id) => {
+    getUserById = async (id) => {
 
         let user = []
         user = await User.findOne({
             where: { id },
             include: [{
-                model : UserRol,
-                as: 'roles',
-                include: {
-                    model: Rol,
-                    as: 'rol'
-                }
-            }]
-        })
-
-        if (!user) throw new Error("No existe el usuario")
-
-        user ={
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            deletedAt: user.deletedAt,
-            roles: user.roles.map(rol => rol.rol.name)
-        }
-
-        return user
-    }
-
-    getUserByEmail = async(email) => {
-        let user = []
-
-        user = await User.findOne({
-            where: { 
-                email: email
-            },
-            include: [{
-                model : UserRol,
+                model: UserRol,
                 as: 'roles',
                 include: {
                     model: Rol,
@@ -93,16 +62,47 @@ class UserConnection {
         return user
     }
 
-    login = async(email, password) => {
+    getUserByEmail = async (email) => {
+        let user = []
+
+        user = await User.findOne({
+            where: {
+                email: email
+            },
+            include: [{
+                model: UserRol,
+                as: 'roles',
+                include: {
+                    model: Rol,
+                    as: 'rol'
+                }
+            }]
+        })
+
+        if (!user) throw new Error("No existe el usuario")
+
+        user = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            deletedAt: user.deletedAt,
+            roles: user.roles.map(rol => rol.rol.name)
+        }
+
+        return user
+    }
+
+    login = async (email, password) => {
         let user = []
         console.log(email, password)
 
         user = await User.findOne({
-            where: { 
+            where: {
                 email: email
             },
             include: [{
-                model : UserRol,
+                model: UserRol,
                 as: 'roles',
                 include: {
                     model: Rol,
@@ -129,7 +129,7 @@ class UserConnection {
         return user
     }
 
-    postUser = async(body) => {
+    postUser = async (body) => {
         const { name, email, password, image, roles } = body
 
         const user = await User.create({
@@ -153,7 +153,7 @@ class UserConnection {
 
         const userCreado = await User.findByPk(user.id, {
             include: [{
-                model : UserRol,
+                model: UserRol,
                 as: 'roles',
                 include: {
                     model: Rol,
@@ -172,7 +172,7 @@ class UserConnection {
         }
     }
 
-    putUser = async(id, body) => {
+    putUser = async (id, body) => {
         let user = []
 
         user = User.update(body, {
@@ -188,10 +188,14 @@ class UserConnection {
 
     softDeleteUser = async (id) => {
         try {
-            const user = await User.findByPk(id);
+            const user = await User.findByPk(id, { paranoid: false });
 
             if (!user) {
                 throw new Error(`No se ha encontrado el usuario con el ID proporcionado. (${id})`);
+            }
+
+            if (user.deletedAt) {
+                throw new Error(`El usuario con ID ${id} ya está eliminado.`);
             }
 
             await user.destroy();

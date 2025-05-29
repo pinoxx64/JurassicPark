@@ -3,7 +3,6 @@
 <p-table [value]="users" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
   <ng-template pTemplate="header">
     <tr>
-      <th>ID</th>
       <th>Nombre</th>
       <th>Email</th>
       <th>Acciones</th>
@@ -11,13 +10,18 @@
   </ng-template>
   <ng-template pTemplate="body" let-user>
     <tr>
-      <td>{{ user.id }}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
       <td>
-        <button pButton type="button" label="Editar" icon="pi pi-pencil" class="p-button-text"></button>
-        <button pButton type="button" label="Eliminar" icon="pi pi-trash" class="p-button-text" (click)="deleteUser(user.id)"></button>
+        <button pButton type="button" label="Editar" icon="pi pi-pencil"
+          class="p-button-text"></button>
+        <button *ngIf="user.deletedAt == null" pButton type="button" label="Eliminar" icon="pi pi-trash" class="p-button-text"
+          (click)="deleteUser($event, user.id)"></button>
+        <button *ngIf="user.deletedAt != null" pButton type="button" label="Añadir" icon="pi pi-user-plus"
+          class="p-button-success p-button-text" (click)="activateUser($event, user.id)"></button>
       </td>
     </tr>
   </ng-template>
 </p-table>
+
+<p-confirmPopup></p-confirmPopup>

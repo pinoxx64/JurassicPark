@@ -101,6 +101,7 @@ const UserController = {
             })
     },
     funDeleteUser: (req, res) => {
+        console.log(req.params.id)
         conn.softDeleteUser(req.params.id)
             .then(user => {
                 res.status(200).json({
