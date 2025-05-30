@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CeldaService } from '../../service/celda.service';
 import { SimulacionService } from '../../service/simulacion.service';
-import { Celda } from '../../interface/celda';
+import { Celda, CeldaM } from '../../interface/celda';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
@@ -36,7 +36,7 @@ export class CeldaComponent implements OnInit {
   resultadoBrecha: any = null;
   mostrarDialogoBrecha = false;
 
-  celdaSeleccionada: Celda | null = null;
+  celdaSeleccionada: CeldaM | null = null;
   mostrarDialogo = false;
 
   isAdmin: boolean = false;
@@ -52,7 +52,7 @@ export class CeldaComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerCeldas();
-    
+
     const user = sessionStorage.getItem('user');
     if (user) {
       const usuario = JSON.parse(user);
@@ -81,71 +81,71 @@ export class CeldaComponent implements OnInit {
     });
   }
 
-rellenarComedero(celda: Celda) {
-  this.loading = true;
-  const celdaMod = {
-    id: celda.id,
-    nivelPeligrosidad: celda.nivelPeligrosidad,
-    cantidadAlimento: 100,
-    averias: celda.averias,
-    nivelSeguridad: celda.nivelSeguridad
-  };
-  this.celdaService.putCeldas(celdaMod).subscribe({
-    next: (data) => {
-      if (data?.celda) {
-        const id = this.celdas.findIndex(c => c.id === celda.id);
-        if (id !== -1) this.celdas[id] = data.celda;
+  rellenarComedero(celda: Celda) {
+    this.loading = true;
+    const celdaMod = {
+      id: celda.id,
+      nivelPeligrosidad: celda.nivelPeligrosidad,
+      cantidadAlimento: 100,
+      averias: celda.averias,
+      nivelSeguridad: celda.nivelSeguridad
+    };
+    this.celdaService.putCeldas(celdaMod).subscribe({
+      next: (data) => {
+        if (data?.celda) {
+          const id = this.celdas.findIndex(c => c.id === celda.id);
+          if (id !== -1) this.celdas[id] = data.celda;
+        }
+        this.loading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Comedero rellenado',
+          detail: `La celda ${celda.id} ha sido actualizada.`
+        });
+      },
+      error: () => {
+        this.loading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo rellenar el comedero'
+        });
       }
-      this.loading = false;
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Comedero rellenado',
-        detail: `La celda ${celda.id} ha sido actualizada.`
-      });
-    },
-    error: () => {
-      this.loading = false;
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'No se pudo rellenar el comedero'
-      });
-    }
-  });
-}
+    });
+  }
 
-repararAveria(celda: Celda) {
-  this.loading = true;
-  const celdaMod = {
-    id: celda.id,
-    nivelPeligrosidad: celda.nivelPeligrosidad,
-    cantidadAlimento: celda.cantidadAlimento,
-    averias: 0,
-    nivelSeguridad: celda.nivelSeguridad
-  };
-  this.celdaService.putCeldas(celdaMod).subscribe({
-    next: (data) => {
-      if (data?.celda) {
-        const id = this.celdas.findIndex(c => c.id === celda.id);
-        if (id !== -1) this.celdas[id] = data.celda;
+  repararAveria(celda: Celda) {
+    this.loading = true;
+    const celdaMod = {
+      id: celda.id,
+      nivelPeligrosidad: celda.nivelPeligrosidad,
+      cantidadAlimento: celda.cantidadAlimento,
+      averias: 0,
+      nivelSeguridad: celda.nivelSeguridad
+    };
+    this.celdaService.putCeldas(celdaMod).subscribe({
+      next: (data) => {
+        if (data?.celda) {
+          const id = this.celdas.findIndex(c => c.id === celda.id);
+          if (id !== -1) this.celdas[id] = data.celda;
+        }
+        this.loading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Averías reparadas',
+          detail: `La celda ${celda.id} ha sido actualizada.`
+        });
+      },
+      error: () => {
+        this.loading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo reparar la avería'
+        });
       }
-      this.loading = false;
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Averías reparadas',
-        detail: `La celda ${celda.id} ha sido actualizada.`
-      });
-    },
-    error: () => {
-      this.loading = false;
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'No se pudo reparar la avería'
-      });
-    }
-  });
-}
+    });
+  }
 
   confirmarBrecha(event: Event, celdaId: number) {
     this.confirmationService.confirm({
@@ -190,8 +190,10 @@ repararAveria(celda: Celda) {
   };
 
   verDetalles(celda: Celda) {
-    console.log(celda)
-    this.celdaSeleccionada = celda;
+    this.celdaSeleccionada = {
+      ...celda,
+      dinosaurios: (celda as any).dinosaurios ?? []
+    };
     this.mostrarDialogo = true;
   }
 
