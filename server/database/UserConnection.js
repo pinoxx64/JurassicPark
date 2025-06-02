@@ -172,19 +172,52 @@ class UserConnection {
         }
     }
 
-    putUser = async (id, body) => {
-        let user = []
+putUser = async (id, body) => {
+    await User.update({
+        name: body.name,
+        email: body.email,
+        image: body.image,
+        password: body.password
+    }, {
+        where: { id }
+    });
+s
+    if (body.roles && Array.isArray(body.roles)) {
+        await UserRol.destroy({ where: { userId: id } });
 
-        user = User.update(body, {
-            where: {
-                id: id
+        for (const rolName of body.roles) {
+            const rol = await Rol.findOne({ where: { name: rolName } });
+            if (rol) {
+                await UserRol.create({
+                    userId: id,
+                    rolId: rol.id,
+                });
             }
-        })
-
-        if (!user) throw new Error('No se ha podido modificar el usuario.')
-
-        return user
+        }
     }
+
+    const userActualizado = await User.findByPk(id, {
+        include: [{
+            model: UserRol,
+            as: 'roles',
+            include: {
+                model: Rol,
+                as: 'rol'
+            }
+        }]
+    });
+
+    if (!userActualizado) throw new Error('No se ha podido modificar el usuario.');
+
+    return {
+        id: userActualizado.id,
+        name: userActualizado.name,
+        email: userActualizado.email,
+        image: userActualizado.image,
+        deletedAt: userActualizado.deletedAt,
+        roles: userActualizado.roles.map(rol => rol.rol.name)
+    };
+}
 
     softDeleteUser = async (id) => {
         try {
