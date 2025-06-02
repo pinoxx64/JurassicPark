@@ -20,6 +20,29 @@ class SimulacionesConnection {
 
             let informeIteracion = [];
 
+            // for (const celda of celdas) {
+            //     const porcentaje = Math.random() * 0.1 + 0.05;
+            //     const alimentoInicial = celda.CantAlimento;
+            //     const nuevoAlimento = Math.max(0, Math.floor(alimentoInicial * (1 - porcentaje)));
+
+            //     if (Math.random() < 0.2) {
+            //         celda.Averias += 1;
+            //     }
+
+            //     celda.CantAlimento = nuevoAlimento;
+            //     await celda.save();
+
+            //     const nombresDinosaurios = celda.celdaDinosaurios.map(cd => cd.dinosaurio?.name);
+
+            //     informeIteracion.push({
+            //         celda: celda.id,
+            //         nivelPeligrosidad: celda.nivelPeligrosidadId,
+            //         cantidadAlimento: celda.CantAlimento,
+            //         averias: celda.Averias,
+            //         nivelSeguridad: celda.NivelSeguridad,
+            //         dinosaurios: nombresDinosaurios
+            //     });
+            // }ç
             for (const celda of celdas) {
                 const porcentaje = Math.random() * 0.1 + 0.05;
                 const alimentoInicial = celda.CantAlimento;
@@ -32,7 +55,37 @@ class SimulacionesConnection {
                 celda.CantAlimento = nuevoAlimento;
                 await celda.save();
 
-                const nombresDinosaurios = celda.celdaDinosaurios.map(cd => cd.dinosaurio?.name);
+                let brecha = false;
+                let dinoEscapado = null;
+                if (
+                    celda.CantAlimento < 30 &&
+                    celda.Averias > 4 &&
+                    celda.celdaDinosaurios.length > 0 &&
+                    Math.random() < 0.2
+                ) {
+                    brecha = true;
+                    const idx = Math.floor(Math.random() * celda.celdaDinosaurios.length);
+                    dinoEscapado = celda.celdaDinosaurios[idx];
+
+                    await CeldaDinosaurio.destroy({
+                        where: {
+                            celdaId: celda.id,
+                            dinosaurioId: dinoEscapado.dinosaurioId
+                        }
+                    });
+                }
+
+                const celdaActualizada = await Celda.findByPk(celda.id, {
+                    include: [{
+                        model: CeldaDinosaurio,
+                        as: 'celdaDinosaurios',
+                        include: [{
+                            model: Dinosaurio,
+                            as: 'dinosaurio'
+                        }]
+                    }]
+                });
+                const nombresDinosaurios = celdaActualizada.celdaDinosaurios.map(cd => cd.dinosaurio?.name);
 
                 informeIteracion.push({
                     celda: celda.id,
@@ -40,7 +93,9 @@ class SimulacionesConnection {
                     cantidadAlimento: celda.CantAlimento,
                     averias: celda.Averias,
                     nivelSeguridad: celda.NivelSeguridad,
-                    dinosaurios: nombresDinosaurios
+                    dinosaurios: nombresDinosaurios,
+                    brecha,
+                    dinoEscapado: brecha && dinoEscapado ? dinoEscapado.dinosaurio?.name : null
                 });
             }
 

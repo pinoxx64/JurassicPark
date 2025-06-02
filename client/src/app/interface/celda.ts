@@ -6,6 +6,15 @@ export interface Celda {
     nivelSeguridad: number;
 }
 
+export interface Dinosaurio {
+    id: number
+    name: string;
+    raza: string
+    edad: number
+    nivelPeligrosidad: number;
+    alimentacion: string;
+}
+
 export interface CeldaM{
     id: number;
     nivelPeligrosidad: number;

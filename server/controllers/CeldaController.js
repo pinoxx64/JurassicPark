@@ -34,6 +34,22 @@ const CeldaController = {
                     message: err.message
                 })
             })
+    },
+    funDinosDisponibles: (req, res) => {
+        conn.getDinosDiponibles()
+            .then(dinos => {
+                res.status(200).json({
+                    status: 200,
+                    message: "Dinosaurios disponibles obtenidos correctamente",
+                    dinosaurios: dinos
+                })
+            })
+            .catch(err => {
+                res.status(500).json({
+                    status: 500,
+                    message: err.message
+                })
+            })
     }
 }
 

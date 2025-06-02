@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { CeldaResponse, Celda } from '../interface/celda';
+import { CeldaResponse, Celda, Dinosaurio } from '../interface/celda';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,9 @@ export class CeldaService {
   putCeldas(celda: Celda): Observable<CeldaResponse> {
     console.log(celda.id, celda)
     return this.http.put<CeldaResponse>(`${environment.celdaUrl}/${celda.id}`, celda);
+  }
+
+  getDinosauriosDisponibles() {
+    return this.http.get<Dinosaurio[]>(`${environment.celdaUrl}/dinosDisponibles`);
   }
 }

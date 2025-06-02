@@ -5,6 +5,8 @@ export interface InformeCelda {
     averias: number;
     nivelSeguridad: number;
     dinosaurios: string[];
+    brecha: boolean
+    dinoEscapado: string[]
 }
 
 export interface IteracionSimulacion {
