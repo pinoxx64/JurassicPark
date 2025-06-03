@@ -24,6 +24,7 @@ export class UserService {
   }
 
   putUser(user: User): Observable<HttpResponse<User>> {
+    console.log(user)
     return this.http.put<User>(`${environment.userUrl}/${user.id}`, user, { observe: 'response' });
   }
 

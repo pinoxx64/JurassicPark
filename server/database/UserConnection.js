@@ -110,10 +110,12 @@ class UserConnection {
                 }
             }]
         })
+        console.log(user.password)
 
         if (!user) throw new Error("No existe el usuario")
 
         const correctPassword = await bycrypt.compare(password, user.password)
+        console.log(correctPassword)
 
         if (!correctPassword) throw new Error("Contraseña incorrecta")
 
@@ -181,7 +183,7 @@ putUser = async (id, body) => {
     }, {
         where: { id }
     });
-s
+
     if (body.roles && Array.isArray(body.roles)) {
         await UserRol.destroy({ where: { userId: id } });
 
@@ -207,6 +209,7 @@ s
         }]
     });
 
+    console.log(userActualizado)
     if (!userActualizado) throw new Error('No se ha podido modificar el usuario.');
 
     return {

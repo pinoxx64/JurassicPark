@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CeldaM } from '../../interface/celda';
+import { CeldaM } from '../../../interface/celda';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 

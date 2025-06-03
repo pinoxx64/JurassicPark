@@ -8,6 +8,7 @@ import { TableModule } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { UserEditComponent } from '../../component/user-edit/user-edit.component';
+import { UserRolesEditComponent } from '../../component/user-roles-edit/user-roles-edit.component';
 
 @Component({
   selector: 'app-gestion-user',
@@ -17,7 +18,8 @@ import { UserEditComponent } from '../../component/user-edit/user-edit.component
     ButtonModule,
     TableModule,
     ConfirmPopupModule,
-    UserEditComponent
+    UserEditComponent,
+    UserRolesEditComponent
 ],
   providers: [ConfirmationService],
   templateUrl: './gestion-user.component.html',
@@ -27,6 +29,12 @@ export class GestionUserComponent {
   users: User[] = [];
   editDialogVisible = false;
   userToEdit: User | null = null;
+  user!: User;
+
+  rolesDialogVisible = false;
+  userRolesToEdit: string[] = [];
+  userToEditRoles: User | null = null;
+  userIdToEditRoles: number | null = null;
 
   constructor(
     private userService: UserService,
@@ -99,4 +107,27 @@ export class GestionUserComponent {
       this.closeEditDialog();
     });
   };
+
+openRolesDialog(user: User) {
+  this.userRolesToEdit = user.roles;
+  this.userToEditRoles = user;
+  this.rolesDialogVisible = true;
+}
+
+closeRolesDialog() {
+  this.rolesDialogVisible = false;
+  this.userToEditRoles = null;
+}
+
+saveRolesEdit(roles: string[]) {
+  if (!this.userToEditRoles) return;
+  const userBody = {
+    ...this.userToEditRoles,
+    roles
+  };
+  this.userService.putUser(userBody).subscribe(() => {
+    this.loadUsers();
+    this.closeRolesDialog();
+  });
+}
 }
