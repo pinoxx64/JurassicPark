@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Simulacion, SimulacionBrechaResponse } from '../interface/simulacion';
@@ -9,13 +9,19 @@ import { environment } from '../../environments/environment';
 })
 export class SimulacionService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getSimulacionNormal(tiempo: number): Observable<Simulacion> {
-    return this.http.post<Simulacion>(`${environment.simulacionUrl}`, { tiempo });
+    const token = sessionStorage.getItem('token');
+    console.log(token)
+    const headers = new HttpHeaders().set('token', token || '');
+    console.log(headers)
+    return this.http.post<Simulacion>(`${environment.simulacionUrl}`, { tiempo }, { headers });
   }
 
   getSimulacionBrecha(celdaId: number): Observable<SimulacionBrechaResponse> {
-    return this.http.post<SimulacionBrechaResponse>(`${environment.simulacionUrl}/brecha`, { celdaId });
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('token', token || '');
+    return this.http.post<SimulacionBrechaResponse>(`${environment.simulacionUrl}/brecha`, { celdaId }, { headers });
   }
 }

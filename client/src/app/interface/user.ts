@@ -7,3 +7,10 @@ export interface User {
     roles: string[],
     deletedAt: any
 }
+
+export interface UserResponse {
+    message: string,
+    status: number,
+    user: User,
+    token: string
+}

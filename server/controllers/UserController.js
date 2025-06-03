@@ -1,4 +1,5 @@
 import { UserConnection } from "../database/UserConnection.js"
+import { generateJWT } from "../helpers/generateJWT.js"
 
 const conn = new UserConnection()
 
@@ -55,10 +56,12 @@ const UserController = {
     funLogin: (req, res) => {
         conn.login(req.body.email, req.body.password)
             .then(user => {
+                const token = generateJWT(user.id, user.roles)
                 res.status(200).json({
                     status: 200,
                     message: "Usuario logueado correctamente",
-                    user: user
+                    user: user,
+                    token: token
                 })
             })
             .catch(err => {

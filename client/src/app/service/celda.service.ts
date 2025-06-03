@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -9,18 +9,25 @@ import { CeldaResponse, Celda, Dinosaurio } from '../interface/celda';
 })
 export class CeldaService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCeldas(): Observable<CeldaResponse> {
-    return this.http.get<CeldaResponse>(`${environment.celdaUrl}`);
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('token', token || '');
+    console.log(headers)
+    return this.http.get<CeldaResponse>(`${environment.celdaUrl}`, { headers });
   }
 
   putCeldas(celda: Celda): Observable<CeldaResponse> {
     console.log(celda.id, celda)
-    return this.http.put<CeldaResponse>(`${environment.celdaUrl}/${celda.id}`, celda);
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('token', token || '');
+    return this.http.put<CeldaResponse>(`${environment.celdaUrl}/${celda.id}`, celda, { headers });
   }
 
   getDinosauriosDisponibles() {
-    return this.http.get<Dinosaurio[]>(`${environment.celdaUrl}/dinosDisponibles`);
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('token', token || '');
+    return this.http.get<Dinosaurio[]>(`${environment.celdaUrl}/dinosDisponibles`, { headers });
   }
 }
