@@ -3,7 +3,7 @@
 <div class="celda-card-container" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
   <p-card *ngFor="let celda of celdas" [header]="'Celda ' + celda.id" [ngStyle]="{width: '320px'}">
     <ng-template pTemplate="footer">
-      <button pButton type="button" icon="pi pi-exclamation-triangle" label="Simular Brecha"
+      <button *ngIf="isAdmin" pButton type="button" icon="pi pi-exclamation-triangle" label="Simular Brecha"
         (click)="confirmarBrecha($event, celda.id)" [disabled]="loading" severity="danger"
         style="margin-right: 0.5rem;"></button>
       <button pButton type="button" icon="pi pi-search" label="Ver Detalles" (click)="verDetalles(celda)"></button>
