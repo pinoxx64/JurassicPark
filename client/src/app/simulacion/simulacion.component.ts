@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SimulacionService } from '../service/simulacion.service';
-import { Simulacion, IteracionSimulacion, InformeCelda } from '../interface/simulacion';
+import { Simulacion, IteracionSimulacion } from '../interface/simulacion';
 import { CabeceraComponent } from "../cabecera/cabecera.component";
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -28,7 +28,15 @@ export class SimulacionComponent {
   loading: boolean = false;
   iteracionesMostradas: IteracionSimulacion[] = [];
 
-  constructor(private simulacionService: SimulacionService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+  constructor(
+    private simulacionService: SimulacionService
+  ) { }
+
+  ngOnDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
 
   iniciarSimulacion() {
     if (this.timer) {
@@ -63,17 +71,6 @@ export class SimulacionComponent {
       if (this.iteracionActual < this.iteraciones.length) {
         const iter = this.iteraciones[this.iteracionActual];
         this.iteracionesMostradas.push(iter);
-
-        iter.informe.forEach(row => {
-          if (row.brecha) {
-            this.messageService.add({
-              severity: 'warn',
-              summary: '¡Brecha de Seguridad!',
-              detail: `En la celda ${row.celda} se ha escapado el dinosaurio ${row.dinoEscapado}.`
-            });
-          }
-        });
-
         this.iteracionActual++;
       } else {
         clearInterval(this.timer);

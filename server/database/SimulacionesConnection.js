@@ -1,4 +1,5 @@
 import { Celda, CeldaDinosaurio, Dinosaurio } from "../models/associations.js"
+import { io } from '../app/server.js'
 
 class SimulacionesConnection {
     simularFuncionNormal = async (tiempo) => {
@@ -20,29 +21,6 @@ class SimulacionesConnection {
 
             let informeIteracion = [];
 
-            // for (const celda of celdas) {
-            //     const porcentaje = Math.random() * 0.1 + 0.05;
-            //     const alimentoInicial = celda.CantAlimento;
-            //     const nuevoAlimento = Math.max(0, Math.floor(alimentoInicial * (1 - porcentaje)));
-
-            //     if (Math.random() < 0.2) {
-            //         celda.Averias += 1;
-            //     }
-
-            //     celda.CantAlimento = nuevoAlimento;
-            //     await celda.save();
-
-            //     const nombresDinosaurios = celda.celdaDinosaurios.map(cd => cd.dinosaurio?.name);
-
-            //     informeIteracion.push({
-            //         celda: celda.id,
-            //         nivelPeligrosidad: celda.nivelPeligrosidadId,
-            //         cantidadAlimento: celda.CantAlimento,
-            //         averias: celda.Averias,
-            //         nivelSeguridad: celda.NivelSeguridad,
-            //         dinosaurios: nombresDinosaurios
-            //     });
-            // }ç
             for (const celda of celdas) {
                 const porcentaje = Math.random() * 0.1 + 0.05;
                 const alimentoInicial = celda.CantAlimento;
@@ -72,6 +50,11 @@ class SimulacionesConnection {
                             celdaId: celda.id,
                             dinosaurioId: dinoEscapado.dinosaurioId
                         }
+                    });
+
+                    io.emit('brecha', {
+                        celda: celda.id,
+                        dinoEscapado: dinoEscapado.dinosaurio?.name
                     });
                 }
 
