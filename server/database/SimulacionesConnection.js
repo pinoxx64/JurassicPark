@@ -22,24 +22,28 @@ class SimulacionesConnection {
             let informeIteracion = [];
 
             for (const celda of celdas) {
-                const porcentaje = Math.random() * 0.1 + 0.05;
-                const alimentoInicial = celda.CantAlimento;
-                const nuevoAlimento = Math.max(0, Math.floor(alimentoInicial * (1 - porcentaje)));
+                const numDinos = celda.celdaDinosaurios.length;
 
-                if (Math.random() < 0.2) {
-                    celda.Averias += 1;
+                if (numDinos === 0) {
+                    if (Math.random() < 0.02) {
+                        celda.Averias += 1;
+                    }
+                } else {
+                    const porcentaje = (Math.random() * 0.1 + 0.05) * numDinos;
+                    const alimentoInicial = celda.CantAlimento;
+                    const nuevoAlimento = Math.max(0, Math.floor(alimentoInicial * (1 - porcentaje)));
+                    celda.CantAlimento = nuevoAlimento;
+
+                    if (Math.random() < 0.2) {
+                        celda.Averias += 1;
+                    }
                 }
 
-                celda.CantAlimento = nuevoAlimento;
                 await celda.save();
 
                 let brecha = false;
                 let dinoEscapado = null;
-                if (
-                    celda.CantAlimento < 30 &&
-                    celda.Averias > 4 &&
-                    celda.celdaDinosaurios.length > 0 &&
-                    Math.random() < 0.2
+                if (celda.CantAlimento < 30 && celda.Averias > 4 && celda.celdaDinosaurios.length > 0 && Math.random() < 0.2
                 ) {
                     brecha = true;
                     const idx = Math.floor(Math.random() * celda.celdaDinosaurios.length);
