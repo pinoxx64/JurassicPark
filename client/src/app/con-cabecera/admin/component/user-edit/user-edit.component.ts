@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../interface/user';
+import { User } from '../../../../interface/user';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';

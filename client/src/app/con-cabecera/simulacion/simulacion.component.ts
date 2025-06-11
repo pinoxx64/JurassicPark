@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SimulacionService } from '../service/simulacion.service';
-import { Simulacion, IteracionSimulacion } from '../interface/simulacion';
-import { CabeceraComponent } from "../cabecera/cabecera.component";
+import { SimulacionService } from '../../service/simulacion.service';
+import { Simulacion, IteracionSimulacion } from '../../interface/simulacion';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +14,7 @@ import { ToastModule } from 'primeng/toast';
   selector: 'app-simulacion',
   templateUrl: './simulacion.component.html',
   styleUrls: ['./simulacion.component.css'],
-  imports: [CabeceraComponent, CommonModule, TableModule, FormsModule, ButtonModule, InputNumberModule, ToastModule],
+  imports: [CommonModule, TableModule, FormsModule, ButtonModule, InputNumberModule, ToastModule],
   providers: [ConfirmationService, MessageService]
 })
 export class SimulacionComponent {

@@ -13,21 +13,6 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Jurassic Park';
-
-    constructor(
-    private websocketService: WebsocketService,
-    private messageService: MessageService
-  ) {}
-
-    ngOnInit() {
-    this.websocketService.onBrecha().subscribe(data => {
-      this.messageService.add({
-        severity: 'warn',
-        summary: '¡Brecha de Seguridad!',
-        detail: `En la celda ${data.celda} se ha escapado el dinosaurio ${data.dinoEscapado}.`
-      });
-    });
-  }
 }

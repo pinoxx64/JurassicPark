@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CabeceraComponent } from "../../cabecera/cabecera.component";
 
 @Component({
   selector: 'app-inicio',
-  imports: [CabeceraComponent],
+  imports: [],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })

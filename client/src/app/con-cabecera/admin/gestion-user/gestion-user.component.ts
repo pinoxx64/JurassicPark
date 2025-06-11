@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../service/user.service';
 import { User } from '../../../interface/user';
-import { CabeceraComponent } from "../../../cabecera/cabecera.component";
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { UserEditComponent } from '../../component/user-edit/user-edit.component';
-import { UserRolesEditComponent } from '../../component/user-roles-edit/user-roles-edit.component';
+import { UserEditComponent } from '../component/user-edit/user-edit.component';
+import { UserRolesEditComponent } from '../component/user-roles-edit/user-roles-edit.component';
 
 @Component({
   selector: 'app-gestion-user',
   imports: [
-    CabeceraComponent,
     CommonModule,
     ButtonModule,
     TableModule,

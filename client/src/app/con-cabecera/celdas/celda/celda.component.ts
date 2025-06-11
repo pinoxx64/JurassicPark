@@ -10,9 +10,8 @@ import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { CabeceraComponent } from "../../../cabecera/cabecera.component";
-import { CeldaDetalleComponent } from "../../component/celda-detalle/celda-detalle.component";
-import { BrechaResultadoComponent } from "../../component/brecha-resultado/brecha-resultado.component";
+import { CeldaDetalleComponent } from "../component/celda-detalle/celda-detalle.component";
+import { BrechaResultadoComponent } from "../component/brecha-resultado/brecha-resultado.component";
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
@@ -28,7 +27,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     CardModule,
     ButtonModule,
     ConfirmPopupModule,
-    CabeceraComponent,
     CeldaDetalleComponent,
     BrechaResultadoComponent,
     DialogModule,
