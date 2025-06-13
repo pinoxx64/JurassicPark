@@ -77,4 +77,8 @@ export class SimulacionComponent {
       }
     }, 5000);
   }
+
+  infoBrecha(iter: IteracionSimulacion): boolean {
+    return iter.informe.some(row => row.brecha);
+  }
 }
