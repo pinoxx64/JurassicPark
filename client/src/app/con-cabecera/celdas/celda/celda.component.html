@@ -1,0 +1,74 @@
+<p-toast></p-toast>
+<div class="celda-card-container" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+  <p-card *ngFor="let celda of celdas" [header]="'Celda ' + celda.id" [ngStyle]="{width: '320px'}">
+    <ng-template pTemplate="footer">
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
+        <div style="display: flex; gap: 0.5rem;">
+          <button *ngIf="isAdmin" pButton type="button" icon="pi pi-exclamation-triangle" label="Simular Brecha"
+            (click)="confirmarBrecha($event, celda.id)" [disabled]="loading" severity="danger">
+          </button>
+          <button pButton type="button" icon="pi pi-search" label="Ver Detalles" (click)="verDetalles(celda)">
+          </button>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button *ngIf="isAdmin" pButton type="button" icon="pi pi-plus" severity="contrast" label="Añadir Dinosaurio"
+            (click)="abrirSelectorDinosaurio(celda)">
+          </button>
+          <button *ngIf="isVeterinario" pButton type="button" severity="info" icon="pi pi-apple"
+            label="Rellenar comederos" (click)="rellenarComedero(celda)">
+          </button>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button *ngIf="isMantenimiento" pButton type="button" severity="warn" icon="pi pi-wrench"
+            label="Arreglar averías" (click)="repararAveria(celda)">
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
+
+<p-dialog header="Dinosaurios disponibles" [(visible)]="dinosauriosDialogVisible" [modal]="true"
+  [style]="{width: '500px'}">
+  <div *ngIf="dinosauriosDisponibles.length > 0">
+    <ul style="list-style:none; padding:0;">
+      <li *ngFor="let dino of dinosauriosDisponibles"
+        style="margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between;">
+        <span>{{ dino.name }}</span>
+        <div>
+          <button pButton type="button" icon="pi pi-info-circle" label="Ver info" class="p-button-sm p-button-info"
+            (click)="mostrarInfoDino(dino)"></button>
+          <button pButton type="button" icon="pi pi-plus" label="Añadir" class="p-button-sm p-button-success"
+            (click)="anadirDinosaurioACelda(dino)"></button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="dinosauriosDisponibles.length === 0">
+    <span>No hay dinosaurios disponibles.</span>
+  </div>
+</p-dialog>
+
+<p-dialog header="Información del Dinosaurio" [(visible)]="infoDinoVisible" [modal]="true" [style]="{width: '500px'}">
+  <ng-container *ngIf="dinoInfoSeleccionado">
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <img [src]="getDinoImagePath(dinoInfoSeleccionado)" [alt]="dinoInfoSeleccionado.raza" loading="lazy"
+        style="width:80px;height:80px;object-fit:contain;border-radius:8px;border:1px solid #ccc;">
+      <div>
+        <div><b>Nombre:</b> {{ dinoInfoSeleccionado.name }}</div>
+        <div><b>Raza:</b> {{ dinoInfoSeleccionado.raza }}</div>
+        <div><b>Edad:</b> {{ dinoInfoSeleccionado.edad }}</div>
+        <div><b>Nivel Peligrosidad:</b> {{ dinoInfoSeleccionado.nivelPeligrosidad }}</div>
+        <div><b>Alimentacion:</b> {{ dinoInfoSeleccionado.alimentacion }}</div>
+      </div>
+    </div>
+  </ng-container>
+</p-dialog>
+
+<p-confirmPopup></p-confirmPopup>
+
+<app-celda-detalle [celda]="celdaSeleccionada" [visible]="mostrarDialogo" [onClose]="cerrarDialogo">
+</app-celda-detalle>
+
+<app-brecha-resultado [resultado]="resultadoBrecha" [visible]="mostrarDialogoBrecha" [onClose]="cerrarDialogoBrecha">
+</app-brecha-resultado>

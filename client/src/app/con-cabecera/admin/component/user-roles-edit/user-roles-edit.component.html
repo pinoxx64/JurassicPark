@@ -1,0 +1,18 @@
+<p-dialog header="Editar roles" [(visible)]="visible" [modal]="true" [style]="{width: '400px'}" (onHide)="close()">
+  <form (ngSubmit)="save()">
+    <div *ngFor="let rol of roles" style="margin-bottom: 1rem;">
+      <p-checkbox
+        [(ngModel)]="checkedRoles[rol.name]"
+        [binary]="true"
+        [disabled]="rol.disabled"
+        name="rol-{{rol.name}}"
+        inputId="rol-{{rol.name}}">
+      </p-checkbox>
+      <label for="rol-{{rol.name}}" style="margin-left: 0.5rem;">{{ rol.name }}</label>
+    </div>
+    <div style="text-align:right;">
+      <button pButton type="button" label="Cancelar" class="p-button-text" (click)="close()"></button>
+      <button pButton type="submit" label="Guardar" class="p-button-success" style="margin-left:1rem;"></button>
+    </div>
+  </form>
+</p-dialog>

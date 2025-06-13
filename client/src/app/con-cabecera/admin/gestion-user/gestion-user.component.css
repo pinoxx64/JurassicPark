@@ -1,0 +1,29 @@
+:host ::ng-deep .p-table {
+  width: 100%;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-datatable-sm .p-datatable-thead > tr > th {
+  background-color: #f4f4f4;
+  color: #333;
+  text-align: left;
+  font-weight: bold;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr > td {
+  vertical-align: middle;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+:host ::ng-deep .p-button-rounded {
+  margin-right: 5px;
+}

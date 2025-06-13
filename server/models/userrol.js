@@ -20,14 +20,14 @@ UserRol.init({
   userId: {
     type: DataTypes.BIGINT,
     references: {
-      model: 'User',
+      model: 'users',
       key: 'id'
     }
   },
   rolId: {
     type: DataTypes.BIGINT,
     references: {
-      model: 'Rol',
+      model: 'rols',
       key: 'id'
     }
   }

@@ -1,0 +1,72 @@
+<div class="simulacion-container">
+  <h2 style="text-align:center; margin-bottom: 2rem; color:#1a237e;">Simulación del Parque Jurásico</h2>
+  <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 2rem;">
+    <span class="p-inputgroup-addon">Tiempo (iteraciones)</span>
+    <p-inputnumber [(ngModel)]="tiempo" mode="decimal" inputId="withoutgrouping" [useGrouping]="false" [min]="1"
+      [max]="10"></p-inputnumber>
+    <button pButton type="button" label="Iniciar Simulación" icon="pi pi-play" (click)="iniciarSimulacion()"
+      [disabled]="loading || tiempo < 1" style="margin-left: 1rem;"></button>
+  </div>
+
+  <div *ngIf="loading" class="p-mb-3" style="text-align:center;">
+    <i class="pi pi-spin pi-spinner" style="font-size:2rem; color:#1976d2;"></i>
+    <p>Simulando...</p>
+  </div>
+
+  <div *ngIf="mostrando && simulacion">
+    <ng-container *ngFor="let iter of iteracionesMostradas">
+      <h3>Iteración {{ iter.iteracion }} de {{ iteraciones.length }}</h3>
+
+      <div *ngIf="infoBrecha(iter)" class="alert-fuga"
+        style="margin-bottom:1rem; color:#b71c1c; font-weight:bold;">
+        <ng-container *ngFor="let row of iter.informe">
+          <div *ngIf="row.brecha">
+            ¡Se ha escapado <b>{{ row.dinoEscapado }}</b> de la celda <b>{{ row.celda }}</b>!
+          </div>
+        </ng-container>
+      </div>
+
+      <p-table [value]="iter.informe" [responsiveLayout]="'scroll'" [paginator]="false"
+        styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Celda</th>
+            <th>Nivel Peligrosidad</th>
+            <th>Cantidad de Alimento</th>
+            <th>Averías</th>
+            <th>Nivel Seguridad</th>
+            <th>Dinosaurios</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td>{{ row.celda }}</td>
+            <td>
+              <span [ngClass]="{
+                'badge-peligro-bajo': row.nivelPeligrosidad <= 2,
+                'badge-peligro-medio': row.nivelPeligrosidad > 2 && row.nivelPeligrosidad < 5,
+                'badge-peligro-alto': row.nivelPeligrosidad >= 5
+              }">
+                {{ row.nivelPeligrosidad }}
+              </span>
+            </td>
+            <td>{{ row.cantidadAlimento }}</td>
+            <td>{{ row.averias }}</td>
+            <td>{{ row.nivelSeguridad }}</td>
+            <td>
+              <span *ngFor="let dino of row.dinosaurios; let last = last">
+                {{ dino }}<span *ngIf="!last">, </span>
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <hr style="margin:2rem 0; border:0; border-top:1px solid #eee;">
+    </ng-container>
+    <div *ngIf="iteracionesMostradas.length === iteraciones.length" class="p-mt-3" style="text-align:center;">
+      <p style="font-weight:bold; color:#388e3c;">Simulación finalizada.</p>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>
